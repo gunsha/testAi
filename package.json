@@ -1,0 +1,38 @@
+{
+  "name": "test-ai",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "event-stream": "^3.3.2",
+    "gulp": "^3.9.0",
+    "gulp-batch": "^1.0.5",
+    "gulp-concat": "^2.6.0",
+    "gulp-css": "^0.1.0",
+    "gulp-header": "^1.7.1",
+    "gulp-imagemin": "^2.4.0",
+    "gulp-remove-empty-lines": "^0.0.2",
+    "gulp-riot": "^0.4.4",
+    "gulp-sourcemaps": "^1.7.3",
+    "gulp-strip-comments": "^2.2.1",
+    "gulp-svg-sprite": "^1.2.19",
+    "gulp-uglify": "^2.0.0",
+    "gulp-watch": "^4.3.5",
+    "merge-stream": "^1.0.0",
+    "node-static": "^0.7.7",
+    "streamqueue": "^1.1.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gunsha/testAi.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gunsha/testAi/issues"
+  },
+  "homepage": "https://github.com/gunsha/testAi#readme"
+}
