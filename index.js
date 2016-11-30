@@ -1,3 +1,4 @@
+var finder = new PF.AStarFinder( {allowDiagonal: false});
 var Map = function(c){
 	this.id = '#map';
 	this.char = c;
@@ -68,7 +69,9 @@ var Character = function(){
 		}
 	};
 	this.move = function(x,y){
-
+		map.toogleTile(this.tile, this.pos,0);
+		this.pos = {x:x,y:y};
+		map.toogleTile(this.tile, this.pos,1);
 	};
 	this.addToInventory = function(o){
 
@@ -82,12 +85,45 @@ var tileType = {
 	3: 'water',
 	4: 'rock'
 };
+function tilesToGrid(){
+	var grid = [];
+	for (var i = 0; i < map.tiles.length; i++) {
+		grid.push([]);
+		for (var e = 0; e < map.tiles[i].length; e++) {
+			grid[i].push(map.tiles[i][e][0] === 0 ? 0 : 1);		
+		}
+	}
+	return new PF.Grid(grid);
+}
 var char,map;
+var timeouts = [];
+function stopTimeouts(){
+	for (var i = 0; i < timeouts.length; i++) {
+		clearTimeout(timeouts[i]);
+	}
+}
 $(function(){
 	char = new Character();
 	map = new Map(char);
 	map.init();
+	$('.tile').click(function(){
+		stopTimeouts();
+		$('.viewpoint').removeClass('viewpoint');
+		var y = parseInt(this.parentElement.id.replace('Y',''));
+		var x = parseInt(this.id.replace('X',''));
+		var grid = tilesToGrid();
+		var path = finder.findPath(char.pos.x, char.pos.y, x, y, grid);
+		for (var i = 0; i < path.length; i++) {
+			var xm = path[i][0];
+			var ym = path[i][1];
+			$('#Y'+ym+' #X'+xm).addClass('viewpoint');
+			timeouts.push(setTimeout(function(o){
+							char.move(o[0],o[1]);
+						},150*i,[xm,ym]));
+		}
+	});
 });
+
 var arrow = {37: {code:37 ,name:'left',offset:[-1,0]}, 38: {code:38 ,name:'up',offset:[0,-1]}, 39: {code:39 ,name:'right',offset:[1,0]}, 40: {code:40 ,name:'down',offset:[0,1]} };
 $(document).keydown(function(e){
     var k = e.keyCode || e.which;
